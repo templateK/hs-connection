@@ -50,7 +50,6 @@ module Network.Connection
     , connectionIsSecure
     ) where
 
-import Control.Applicative
 import Control.Concurrent.MVar
 import Control.Monad (join)
 import qualified Control.Exception as E
@@ -82,11 +81,11 @@ import qualified Data.ByteString.Lazy as L
 import System.Environment
 import System.Timeout
 import System.IO
-import qualified Data.Map as M
+-- import qualified Data.Map as M
 
 import Network.Connection.Types
 
-type Manager = MVar (M.Map TLS.SessionID TLS.SessionData)
+-- type Manager = MVar (M.Map TLS.SessionID TLS.SessionData)
 
 -- | This is the exception raised if we reached the user specified limit for
 -- the line in ConnectionGetLine.
@@ -102,13 +101,13 @@ instance E.Exception LineTooLong
 instance E.Exception HostNotResolved
 instance E.Exception HostCannotConnect
 
-connectionSessionManager :: Manager -> TLS.SessionManager
-connectionSessionManager mvar = TLS.SessionManager
-    { TLS.sessionResume     = \sessionID -> withMVar mvar (return . M.lookup sessionID)
-    , TLS.sessionEstablish  = \sessionID sessionData ->
-                               modifyMVar_ mvar (return . M.insert sessionID sessionData)
-    , TLS.sessionInvalidate = \sessionID -> modifyMVar_ mvar (return . M.delete sessionID)
-    }
+-- connectionSessionManager :: Manager -> TLS.SessionManager
+-- connectionSessionManager mvar = TLS.SessionManager
+--     { TLS.sessionResume     = \sessionID -> withMVar mvar (return . M.lookup sessionID)
+--     , TLS.sessionEstablish  = \sessionID sessionData ->
+--                                modifyMVar_ mvar (return . M.insert sessionID sessionData)
+--     , TLS.sessionInvalidate = \sessionID -> modifyMVar_ mvar (return . M.delete sessionID)
+--     }
 
 -- | Initialize the library with shared parameters between connection.
 initConnectionContext :: IO ConnectionContext
