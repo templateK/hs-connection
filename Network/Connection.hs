@@ -207,7 +207,7 @@ connectTo cg cParams = do
 
         resolve' host portid = do
             let serv = case portid of
-                            N.Service serv -> serv
+                            N.Service serv' -> serv'
                             N.PortNumber n -> show n
                             _              -> error "cannot resolve service" 
             proto <- getProtocolNumber "tcp"
