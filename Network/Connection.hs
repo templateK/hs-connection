@@ -118,7 +118,7 @@ initConnectionContext = ConnectionContext <$> getSystemCertificateStore
 makeTLSParams :: ConnectionContext -> ConnectionID -> TLSSettings -> TLS.ClientParams
 makeTLSParams cg cid ts@(TLSSettingsSimple {}) =
     (TLS.defaultParamsClient (fst cid) portString)
-        { TLS.clientSupported = def { TLS.supportedCiphers = TLS.ciphersuite_all }
+        { TLS.clientSupported = def { TLS.supportedCiphers = TLS.ciphersuite_strong }
         , TLS.clientShared    = def
             { TLS.sharedCAStore         = globalCertificateStore cg
             , TLS.sharedValidationCache = validationCache
